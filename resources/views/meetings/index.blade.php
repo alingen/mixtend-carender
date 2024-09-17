@@ -6,8 +6,9 @@
     <title>ミーティングカレンダー</title>
     <style>
     </style>
+    @vite('resources/css/app.css')
 </head>
 <body>
-    <h1>ミーティングカレンダー</h1>
+    <h1 class="p-12">ミーティングカレンダー</h1>
 </body>
 </html>
