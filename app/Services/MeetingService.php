@@ -3,14 +3,20 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class MeetingService
 {
     public function getMeetingsData()
     {
         // APIからデータを取得
-        $response = Http::get('https://mixtend.github.io/schedule.json');
+        $response = Http::withHeaders([
+            'User-Agent' => 'Mixtend Coding Test'
+        ])->get('https://mixtend.github.io/schedule.json');
         $data = $response->json();
+
+        // レスポンスをログに記録
+        Log::info('API Response: ', $response->json());
 
         // 30分ごとの時間帯を生成
         $data['times'] = $this->generateTimeSlots($data['working_hours']['start'], $data['working_hours']['end']);
