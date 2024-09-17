@@ -10,17 +10,6 @@
 </head>
 <body>
     <h1 class="p-12">カレンダーUI</h1>
-    @php
-        // working_hoursからstartとendを取得して、30分ごとの時間帯を生成
-        $times = [];
-        $start = $data['working_hours']['start'];
-        $end = date('H:i', strtotime($data['working_hours']['end'] . '+1 hour')); // 19-20時の予定表示するため1時間後ろにずらす
-        $time = $start;
-        while($time < $end) {
-            $times[] = $time;
-            $time = date('H:i', strtotime($time . '+30 minutes'));
-        }
-    @endphp
 
     <div class="flex p-4">
         <ul class="time-slot-list w-1/6">
@@ -47,11 +36,7 @@
                     @endphp
                     @foreach($meetings as $meeting)
                         @php
-                            // startとendを取得して差を整数に変換
-                            $meetingStart = \Carbon\Carbon::parse($meeting['start']);
-                            $meetingEnd = \Carbon\Carbon::parse($meeting['end']);
-                            $duration = $meetingStart->diffInMinutes($meetingEnd);
-                            $heightClass = 'h-' . ($duration / 30 * 12); // 30分ごとにh-12の高さに変換
+                            $heightClass = App\Helpers\MeetingHelper::calculateHeightClass($meeting['start'], $meeting['end']);
                         @endphp
                         @if($meeting['start'] == $time)
                             <li class="hour relative h-12">
