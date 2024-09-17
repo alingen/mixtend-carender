@@ -41,7 +41,7 @@
                         @endphp
                         @if($meeting['start'] == $time)
                             <li class="hour relative h-12">
-                                <div class="absolute bg-teal-400 text-white p-4 rounded h-full w-full {{ $heightClass }} absolute">
+                                <div class="absolute bg-teal-400 text-white p-4 rounded w-full {{ $heightClass }}">
                                     {{ $meeting['summary'] }}
                                 </div>
                             </li>
