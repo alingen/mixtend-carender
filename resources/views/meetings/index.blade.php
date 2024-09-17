@@ -24,15 +24,16 @@
             @endfor
         </ul>
       
-        <div class="flex-1 flex">
+        <div class="flex-1 flex border">
             @foreach($data['meetings'] as $date => $meetings)
-            <ul class="w-1/3">
-                <li class="h-12 border flex items-center justify-center">
+            <ul class="w-1/3 border">
+                <li class="h-12 border-b flex items-center justify-center">
                     <span>{{ \Carbon\Carbon::parse($date)->locale('ja')->isoFormat('M/D(ddd)') }}</span>
                 </li>
-                @foreach($times as $time)
+                @foreach($times as $index => $time)
                     @php
                     $meetingFound = false;
+                    $isFullHour = $index % 2 !== 0;
                     @endphp
                     @foreach($meetings as $meeting)
                         @php
@@ -51,7 +52,7 @@
                         @endif
                     @endforeach
                     @if(!$meetingFound)
-                        <li class="h-12 border"></li>
+                        <li class="h-12 {{ $isFullHour ? 'border-b' : '' }}"></li>
                     @endif
                 @endforeach
             </ul>
